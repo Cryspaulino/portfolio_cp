@@ -53,6 +53,24 @@ CREATE TABLE education (
     FOREIGN KEY (job_id) REFERENCES jobs(id)
 );
 
+-- Feedback form table
+CREATE TABLE IF NOT EXISTS feedback_form (
+    id SERIAL PRIMARY KEY,
+    subject VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    submitted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Users table for registration system
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Insert jobs
 INSERT INTO jobs (id, position, company) VALUES
     (0, 'Web and Programming Senior Lead', 'BYU Pathway'),

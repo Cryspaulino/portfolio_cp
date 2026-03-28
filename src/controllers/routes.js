@@ -5,31 +5,31 @@ import { Router } from 'express';
 const router = Router();
 
 // Add contact-specific styles to all contact routes
-router.use('/contact', (req, res, next) => {
-    res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
-    next();
-});
+// router.use('/contact', (req, res, next) => {
+//     res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
+//     next();
+// });
 
-// Add registration-specific styles to all registration routes
-router.use('/register', (req, res, next) => {
-    res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
-    next();
-});
+// // Add registration-specific styles to all registration routes
+// router.use('/register', (req, res, next) => {
+//     res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
+//     next();
+// });
 
-// Contact form routes
-router.use('/contact', contactRoutes);
+// // Contact form routes
+// router.use('/contact', contactRoutes);
 
-// Registration routes
-router.use('/register', registrationRoutes);
+// // Registration routes
+// router.use('/register', registrationRoutes);
 
 // Home and basic pages
-router.get('/', homePage);
-router.get('/about', aboutPage);
+// router.get('/', homePage);
+// router.get('/about', aboutPage);
 
 // Demo page with special middleware
-router.get('/demo', addDemoHeaders, demoPage);
+// router.get('/demo', addDemoHeaders, demoPage);
 
 // Route to trigger a test error
-router.get('/test-error', testErrorPage);
+// router.get('/test-error', testErrorPage);
 
 export default router;
