@@ -18,7 +18,7 @@ const setupDatabase = async () => {
     let hasData = false;
     try {
         const result = await db.query(
-            "SELECT EXISTS (SELECT 1 FROM resume LIMIT 1) as has_data"
+            "SELECT EXISTS (SELECT 1 FROM jobs LIMIT 1) as has_data"
         );
         hasData = result.rows[0]?.has_data || false;
     } catch (error) {
@@ -52,13 +52,5 @@ const testConnection = async () => {
     console.log('Database connection successful:', result.rows[0].current_time);
     return true;
 };
-
-// Run practice.sql if it exists (for student assignments)
-const practicePath = join(__dirname, 'sql', 'practice.sql');
-if (fs.existsSync(practicePath)) {
-    const practiceSQL = fs.readFileSync(practicePath, 'utf8');
-    await db.query(practiceSQL);
-    console.log('Practice database tables initialized');
-}
 
 export { setupDatabase, testConnection };
