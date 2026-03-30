@@ -4,58 +4,42 @@
             <%= title %>
         </h1>
 
-        <!-- Check if users array exists and has content using: if (users && users.length > 0) -->
         <% if (users && users.length> 0) { %>
 
             <div class="users-list">
-                <!-- Loop through users array with forEach -->
                 <% users.forEach(user=> { %>
-                    <!-- For each user in the loop, create this structure: -->
 
                     <div class="user-card">
                         <div class="user-header">
-                            <!-- Add h3 with user's name -->
                             <h3>
                                 <%= user.name %>
                             </h3>
-                            <!-- Add span with class="user-id" showing: ID: user.id -->
                             <span class="user-id">ID: <%= user.id %></span>
                         </div>
 
                         <div class="user-details">
                             <div class="detail-item">
-                                <!-- Add div with class="label" containing: Email -->
                                  <div class="label">
                                     <h4> Email </h4>
                                  </div>
-                                <!-- Add div with class="value" containing: user.email -->
                                  <div class="value">
                                     <p> <%= user.email %> </p>
                                  </div>
                             </div>
 
                             <div class="detail-item">
-                                <!-- Add div with class="label" containing: Registered -->
                                  <div class="label">
                                     <h4>Registered</h4>
                                  </div>
-                                <!-- Add div with class="value" containing formatted date -->
-                                 <div>
+=                                 <div>
                                     <p> <%= new Date(user.created_at).toLocaleDateString() %> </p>
                                  </div>
-                                <!-- HINT: Use new Date(user.created_at).toLocaleDateString() -->
-                            </div>
+]                            </div>
                         </div>
                     </div>
-
-                    <!-- End the forEach loop -->
                     <% }); %>
             </div>
 
-            <!-- Add else clause -->
-            <!-- Add paragraph with class="no-users" -->
-            <!-- Display message: "No users registered yet." -->
-            <!-- Close the if/else block -->
             <% } else { %>
                 <p class="no-users">No users registered yet.</p>
             <% } %>

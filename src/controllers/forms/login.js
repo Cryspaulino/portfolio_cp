@@ -121,8 +121,9 @@ const showDashboard = (req, res) => {
         delete sessionData.user.password;
     }
 
-    // TODO: Render the dashboard view (dashboard)
-    // TODO: Pass title: 'Dashboard', user, and sessionData to template
+    res.render('dashboard', {
+        title: 'Dashboard', user, sessionData,
+    });
 };
 
 router.get('/', showLoginForm);

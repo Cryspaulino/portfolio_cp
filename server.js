@@ -32,10 +32,8 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Global middleware (sets res.locals variables)
 app.use(addLocalVariables);
 
-// Flash message middleware (must come after session and global middleware)
 app.use(flash);
 
 /**
@@ -46,8 +44,6 @@ app.use('/', routes);
 /**
  * Error Handling
  */
-
-// 404 handler
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
     err.status = 404;
@@ -77,7 +73,6 @@ app.use((err, req, res, next) => {
     try {
         res.status(status).render(`errors/${template}`, context);
     } catch (renderErr) {
-        // If rendering fails, send a simple error page instead
         if (!res.headersSent) {
             res.status(status).send(`<h1>Error ${status}</h1><p>An error occurred.</p>`);
         }
