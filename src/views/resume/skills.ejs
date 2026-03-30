@@ -17,10 +17,10 @@
                 <h2>Available Sections</h2>
                 <div class="sort-options">
                     <span>Sort by: </span>
-                    <a href="/catalog/<%= courseCode %>" class="<%= currentSort === 'time' ? 'active' : '' %>">Time</a>
-                    <a href="/catalog/<%= courseCode %>?sort=professor"
+                    <a href="/resume/<%= courseCode %>" class="<%= currentSort === 'time' ? 'active' : '' %>">Time</a>
+                    <a href="/resume/<%= courseCode %>?sort=professor"
                         class="<%= currentSort === 'professor' ? 'active' : '' %>">Professor</a>
-                    <a href="/catalog/<%= courseCode %>?sort=room"
+                    <a href="/resume/<%= courseCode %>?sort=room"
                         class="<%= currentSort === 'room' ? 'active' : '' %>">Room</a>
                 </div>
             </div>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="navigation">
-            <p><a href="/catalog">&larr; Back to Course Catalog</a></p>
+            <p><a href="/resume">&larr; Back to Course resume</a></p>
         </div>
     </main>
     <%- include('../partials/footer') %> -->

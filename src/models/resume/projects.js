@@ -1,5 +1,5 @@
 import db from '../db.js';
-// similar to catalog
+// similar to resume
 
 /**
  * Core function that gets all sections (course offerings) for a specific course.
@@ -8,23 +8,23 @@ import db from '../db.js';
  * @param {string|number} identifier - Course ID or slug
  * @param {string} identifierType - 'id' or 'slug' (default: 'slug')
  * @param {string} sortBy
- * @returns {Promise<Array>} Array of section objects with course, faculty, and department info
+ * @returns {Promise<Array>} Array of section objects with course, skills, and department info
  */
 const getJobs = async (identifier, identifierType = 'id', sortBy = 'id') => {
     const whereClause = identifierType === 'id' ? 'c.id = $1' : 'c.slug = $1';
     
     /**
-     * Join catalog with courses, faculty, and departments to get complete information.
+     * Join resume with courses, skills, and departments to get complete information.
      * Note: We're using template literals for ORDER BY because PostgreSQL doesn't allow parameterized ORDER BY clauses. The values are whitelisted above, so this is safe.
      */
     const query = `
         SELECT cat.id, cat.time, cat.room, 
                c.course_code, c.name as course_name, c.description, c.credit_hours,
-               f.first_name, f.last_name, f.slug as faculty_slug, f.title as faculty_title,
+               f.first_name, f.last_name, f.slug as skills_slug, f.title as skills_title,
                d.name as department_name, d.code as department_code
-        FROM catalog cat
+        FROM resume cat
         JOIN courses c ON cat.course_slug = c.slug
-        JOIN faculty f ON cat.faculty_slug = f.slug
+        JOIN skills f ON cat.skills_slug = f.slug
         JOIN departments d ON c.department_id = d.id
         WHERE ${whereClause}
         ORDER BY ${orderByClause}
@@ -45,24 +45,24 @@ const getJobs = async (identifier, identifierType = 'id', sortBy = 'id') => {
         description: section.description,
         creditHours: section.credit_hours,
         professor: `${section.first_name} ${section.last_name}`,
-        professorSlug: section.faculty_slug,
-        professorTitle: section.faculty_title,
+        professorSlug: section.skills_slug,
+        professorTitle: section.skills_title,
         department: section.department_name,
         departmentCode: section.department_code
     }));
 };
 
 /**
- * Core function that gets all courses taught by a specific faculty member.
+ * Core function that gets all courses taught by a specific skills member.
  * Similar pattern to getSectionsByCourse - same logic, different perspective.
  * 
- * @param {string|number} identifier - Faculty ID or slug
+ * @param {string|number} identifier - skills ID or slug
  * @param {string} identifierType - 'id' or 'slug' (default: 'slug')
  * @param {string} sortBy - Sort option: 'time', 'room', or 'course' (default: 'time')
- * @returns {Promise<Array>} Array of section objects with course, faculty, and department info
+ * @returns {Promise<Array>} Array of section objects with course, skills, and department info
  */
-const getCoursesByFaculty = async (identifier, identifierType = 'slug', sortBy = 'time') => {
-    // Search by faculty ID or faculty slug
+const getCoursesByskills = async (identifier, identifierType = 'slug', sortBy = 'time') => {
+    // Search by skills ID or skills slug
     const whereClause = identifierType === 'id' ? 'f.id = $1' : 'f.slug = $1';
     
     // Different sorting options - by time, room, or course code
@@ -70,15 +70,15 @@ const getCoursesByFaculty = async (identifier, identifierType = 'slug', sortBy =
                           sortBy === 'course' ? 'c.course_code' :
                           "SUBSTRING(cat.time FROM '(\\d{1,2}):(\\d{2})')::INTEGER";
     
-    // Same JOIN pattern - catalog connects courses to faculty
+    // Same JOIN pattern - resume connects courses to skills
     const query = `
         SELECT cat.id, cat.time, cat.room, 
                c.course_code, c.name as course_name, c.description, c.credit_hours,
-               f.first_name, f.last_name, f.slug as faculty_slug, f.title as faculty_title,
+               f.first_name, f.last_name, f.slug as skills_slug, f.title as skills_title,
                d.name as department_name, d.code as department_code
-        FROM catalog cat
+        FROM resume cat
         JOIN courses c ON cat.course_slug = c.slug
-        JOIN faculty f ON cat.faculty_slug = f.slug
+        JOIN skills f ON cat.skills_slug = f.slug
         JOIN departments d ON c.department_id = d.id
         WHERE ${whereClause}
         ORDER BY ${orderByClause}
@@ -95,8 +95,8 @@ const getCoursesByFaculty = async (identifier, identifierType = 'slug', sortBy =
         description: section.description,
         creditHours: section.credit_hours,
         professor: `${section.first_name} ${section.last_name}`,
-        professorSlug: section.faculty_slug,
-        professorTitle: section.faculty_title,
+        professorSlug: section.skills_slug,
+        professorTitle: section.skills_title,
         department: section.department_name,
         departmentCode: section.department_code
     }));
@@ -113,15 +113,15 @@ const getSectionsByCourseId = (courseId, sortBy = 'time') =>
 const getSectionsByCourseSlug = (courseSlug, sortBy = 'time') => 
     getSectionsByCourse(courseSlug, 'slug', sortBy);
 
-const getCoursesByFacultyId = (facultyId, sortBy = 'time') => 
-    getCoursesByFaculty(facultyId, 'id', sortBy);
+const getCoursesByskillsId = (skillsId, sortBy = 'time') => 
+    getCoursesByskills(skillsId, 'id', sortBy);
 
-const getCoursesByFacultySlug = (facultySlug, sortBy = 'time') => 
-    getCoursesByFaculty(facultySlug, 'slug', sortBy);
+const getCoursesByskillsSlug = (skillsSlug, sortBy = 'time') => 
+    getCoursesByskills(skillsSlug, 'slug', sortBy);
 
 export { 
     getSectionsByCourseId,
     getSectionsByCourseSlug,
-    getCoursesByFacultyId,
-    getCoursesByFacultySlug
+    getCoursesByskillsId,
+    getCoursesByskillsSlug
 };

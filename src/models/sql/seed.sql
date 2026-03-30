@@ -1,6 +1,4 @@
 -- Database seed file for resume info
--- This file creates tables and inserts all initial data
-
 -- GUIDE: 
 -- departments = jobs
 -- courses = projects
@@ -10,7 +8,7 @@
 BEGIN;
 
 -- Drop existing tables (in reverse dependency order)
-DROP TABLE IF EXISTS education CASCADE;
+DROP TABLE IF EXISTS resume CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS skills CASCADE;
 DROP TABLE IF EXISTS jobs CASCADE;
@@ -51,7 +49,7 @@ CREATE TABLE projects (
 
 -- Create resume table
 CREATE TABLE resume (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     project_slug VARCHAR(250) NOT NULL,
     skill_slug VARCHAR(200) NOT NULL,
     detail VARCHAR(100) UNIQUE NOT NULL,
@@ -85,19 +83,20 @@ INSERT INTO jobs (id, position, company) VALUES
 
 -- Insert projects
 INSERT INTO projects (name, description, tool, job_id, slug) VALUES
-    ('Landing Page Lists', 'Updating and cleaning landing page information to ensure proper data processing.', 'Sharepoint Lists and Microsoft Bookings', 0, 'landingpage'),
+    ('Landing Page Lists', 'Sharepoint Lists and Microsoft Bookings', 0, 'landingpage'),
     ('Adventure Works', 'Applying Business Analytics skills to simplify the decision making process of a big investment.', 'PowerBI', 1, 'adventureworks');
 
 -- Insert skills: Skills that helped me in those jobs
 INSERT INTO skills (description, job_id, slug) VALUES
-    ('Listening to user experience with apps', 0, 'listener'),
+    ('Updating and cleaning landing page information to ensure proper data processing.', 0, 'clean-data'),
     ('Creating new apps using Microsoft services', 0, 'proactive'),
+    ('')
     ('Grading students in a timely manner and providing good feedback', 1, 'feedback');
 
 -- Insert resume
 INSERT INTO resume (project_slug, skill_slug, detail) VALUES
     ('landingpage', 'proactive', 'Improving processes'),
-    ('landingpage', 'listener', 'Improving user experience')
+    ('landingpage', 'listener', 'Improving user experience'),
     ('adventureworks', 'feedback', 'Adopting feedback');
 
 

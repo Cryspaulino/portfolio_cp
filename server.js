@@ -31,19 +31,12 @@ app.set('views', path.join(__dirname, 'src/views'));
 // Allow Express to receive and process POST data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(addLocalVariables);
-
 app.use(flash);
 
-/**
- * Routes
- */
 app.use('/', routes);
 
-/**
- * Error Handling
- */
+/* Error Handling */
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
     err.status = 404;

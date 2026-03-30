@@ -18,7 +18,6 @@ const getAllCourses = async (sortBy = 'department') => {
     
     /**
      * JOIN with departments to get department name and code.
-     * Using table aliases (c for courses, d for departments) keeps queries readable.
      */
     const query = `
         SELECT c.id, c.course_code, c.name, c.description, c.credit_hours, c.slug,

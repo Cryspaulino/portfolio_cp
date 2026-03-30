@@ -1,6 +1,6 @@
 import { Router } from 'express';
-// import contactRoutes from './forms/contact.js';
-// import registrationRoutes from './forms/registration.js';
+import contactRoutes from './forms/contact.js';
+import registrationRoutes from './forms/registration.js';
 
 const router = Router();
 
@@ -19,17 +19,17 @@ const router = Router();
 // // Contact form routes
 // router.use('/contact', contactRoutes);
 
-// // Registration routes
-// router.use('/register', registrationRoutes);
+// Registration routes
+router.use('/register', registrationRoutes);
 
 // Home and basic pages
-// router.get('/', homePage);
+router.get('/', homePage);
 // router.get('/about', aboutPage);
 
 // Demo page with special middleware
 // router.get('/demo', addDemoHeaders, demoPage);
 
 // Route to trigger a test error
-// router.get('/test-error', testErrorPage);
+router.get('/test-error', testErrorPage);
 
 export default router;

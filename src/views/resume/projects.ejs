@@ -7,7 +7,7 @@
     <div class="project-list">
         <% Object.values(projects).forEach(project => { %>
             <div class="project-card">
-                <h3><a href="/catalog/<%= courseCode %>"><%= course.name %></a></h3>
+                <h3><a href="/resume/<%= courseCode %>"><%= course.name %></a></h3>
                 <p class="course-id"><%= courseCode %> • <%= course.creditHours %> credits</p>
                 <p class="course-description"><%= course.description %></p>
             </div>
