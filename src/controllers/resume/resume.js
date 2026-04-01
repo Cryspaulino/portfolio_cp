@@ -1,22 +1,19 @@
-// Update these imports:
-import { getAllCourses, getCourseBySlug } from '../../models/resume/skills.js';
-import { getSectionsByCourseSlug } from '../../models/resume/projects.js';
+import { getAllProjects, getProjectBySlug } from '../../models/resume/projects.js';
 
 // Route handler for the resume skills page
 const resumePage = async (req, res) => {
-    const projects = await getAllCourses();
+    const projects = await getAllProjects();
 
     res.render('/resume/projects', {
-        title: 'Course resume',
+        title: 'Projects',
         projects: projects
     });
 };
 
 // Route handler for individual course detail pages
-const courseDetailPage = async (req, res, next) => {
-    const courseSlug = req.params.slugId;
-    const course = await getCourseBySlug(courseSlug);
-    const sections = await getSectionsByCourseSlug(courseSlug, sortBy);
+const projectDetailPage = async (req, res, next) => {
+    const projectSlug = req.params.slugId;
+    const project = await getProjectBySlug(projectSlug);
 
     if (Object.keys(course).length === 0) {
         const err = new Error(`Course ${courseSlug} not found`);
