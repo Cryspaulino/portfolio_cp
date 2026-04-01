@@ -87,7 +87,7 @@ INSERT INTO projects (name, description, tool, job_id, slug) VALUES
     ('Adventure Works', 'Applying Business Analytics skills to simplify the decision making process of a big investment.', 'PowerBI', 1, 'adventureworks');
 
 -- Insert skills: Skills that helped me in those jobs
-INSERT INTO skills (description, job_id, slug) VALUES
+INSERT INTO skills (action, job_id, slug) VALUES
     ('Updating and cleaning landing page information to ensure proper data processing.', 0, 'clean-data'),
     ('Creating new apps using Microsoft services', 0, 'proactive'),
     ('')

@@ -36,6 +36,45 @@ app.use(flash);
 
 app.use('/', routes);
 
+// -- GUIDE: 
+// departments = jobs
+// courses = projects
+// faculty = skills
+// catalog = resume
+
+// Projects resume list page
+app.get('/resume', (req, res) => {
+    res.render('resume', {
+        title: 'Resume',
+        projects: projects
+    });
+});
+
+// Course detail page with route parameter
+// app.get('/catalog/:courseId', (req, res) => {
+//     // Extract the course ID from the URL
+//     const courseId = req.params.courseId;
+
+//     // Look up the course in our data
+//     const course = courses[courseId];
+
+//     // Handle course not found
+//     if (!course) {
+//         const err = new Error(`Course ${courseId} not found`);
+//         err.status = 404;
+//         return next(err);
+//     }
+
+//     // Log the parameter for debugging
+//     console.log('Viewing course:', courseId);
+
+//     // Render the course detail template
+//     res.render('course-detail', {
+//         title: `${course.id} - ${course.title}`,
+//         course: course
+//     });
+// });
+
 /* Error Handling */
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
@@ -50,19 +89,16 @@ app.use((err, req, res, next) => {
         return next(err);
     }
 
-    // Determine status and template
     const status = err.status || 500;
     const template = status === 404 ? '404' : '500';
 
-    // Prepare data for the template
     const context = {
         title: status === 404 ? 'Page Not Found' : 'Server Error',
         error: NODE_ENV === 'production' ? 'An error occurred' : err.message,
         stack: NODE_ENV === 'production' ? null : err.stack,
-        NODE_ENV // Our WebSocket check needs this and its convenient to pass along
+        NODE_ENV
     };
 
-    // Render the appropriate error template with fallback
     try {
         res.status(status).render(`errors/${template}`, context);
     } catch (renderErr) {

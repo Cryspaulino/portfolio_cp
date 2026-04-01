@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import contactRoutes from './forms/contact.js';
+// import contactRoutes from './forms/contact.js';
 import registrationRoutes from './forms/registration.js';
 
 const router = Router();

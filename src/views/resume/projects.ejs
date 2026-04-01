@@ -2,17 +2,16 @@
 <!-- compared to courses -->
 <main>
     <h1>Projects</h1>
-    <p>.</p>
+    <p>Here are some projects I have worked on!</p>
 
     <div class="project-list">
         <% Object.values(projects).forEach(project => { %>
             <div class="project-card">
-                <h3><a href="/resume/<%= courseCode %>"><%= course.name %></a></h3>
-                <p class="course-id"><%= courseCode %> • <%= course.creditHours %> credits</p>
-                <p class="course-description"><%= course.description %></p>
+                <h3><a href="/resume/<%= projectCode %>"><%= project.name %></a></h3>
+                <p class="project-description"><%= project.description %></p>
+                <p class="project-tool"><%= projectCode %> • <%= project.tool %></p>
             </div>
         <% }); %>
     </div>
 </main>
-
     <%- include('../partials/footer') %>

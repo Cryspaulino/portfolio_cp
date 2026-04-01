@@ -4,12 +4,11 @@ import { getSectionsByCourseSlug } from '../../models/resume/projects.js';
 
 // Route handler for the resume skills page
 const resumePage = async (req, res) => {
-    // Model functions are async, so we must await them
-    const courses = await getAllCourses();
+    const projects = await getAllCourses();
 
-    res.render('/resume/list', {
+    res.render('/resume/projects', {
         title: 'Course resume',
-        courses: courses
+        projects: projects
     });
 };
 
@@ -27,13 +26,13 @@ const courseDetailPage = async (req, res, next) => {
 
     // Get sections (course offerings) separately from the resume
     // Pass the sortBy parameter directly to the model - PostgreSQL handles the sorting
-    const sortBy = req.query.sort || 'time';
+    // const sortBy = req.query.sort || 'time';
 
-    res.render('/resume/detail', {
+    res.render('/resume/skills', {
         title: `${course.courseCode} - ${course.name}`,
         course: course,
         sections: sections,
-        currentSort: sortBy
+        // currentSort: sortBy
     });
 };
 
