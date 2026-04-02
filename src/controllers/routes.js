@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { homePage, testErrorPage } from './index.js';
-// import { resumePage, courseDetailPage } from './resume/resume.js';
-
+import { projectPage, skillDetailPage } from './projects/projects.js';
 // import registrationRoutes from './forms/registration.js';
 // import contactRoutes from './forms/contact.js';
 
@@ -9,12 +8,10 @@ const router = Router();
 
 // Home
 router.get('/', homePage);
-// router.get('/resume', resumePage);
-// router.get('/resume/:slugId', courseDetailPage);
-// router.get('/skills')
 
-// Demo page with special middleware
-// router.get('/demo', addDemoHeaders, demoPage);
+// Projects
+router.get('/projects', projectPage);
+router.get('/projects/:slugId', skillDetailPage);
 
 router.get('/test-error', testErrorPage);
 
