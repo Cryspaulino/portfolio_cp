@@ -1,0 +1,25 @@
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.5rem 0 2rem;
+
+  a {
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #4b5563;
+    background: #e5e7eb;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #d1d5db;
+      color: #111827;
+    }
+
+    &.active {
+      background: #6366f1;
+      color: #ffffff;
+    }
+  }
+}

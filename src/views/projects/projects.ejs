@@ -1,16 +1,39 @@
 <%- include('../partials/header') %>
+    <main>
+        <h1>Projects</h1>
+        
+        <div class="filters">
+            <a href="/projects" class="<%= !selectedCategory ? 'active' : '' %>">All</a>
 
-<main>
-    <h1>Projects</h1>
-    <p>Here are some projects I have worked on!</p>
+            <% categories.forEach(cat=> { %>
+                <a href="/projects?category=<%= cat %>" class="<%= selectedCategory === cat ? 'active' : '' %>">
+                    <%= cat %>
+                </a>
+                <% }) %>
+        </div>
 
-    <div class="project-list">
-        <% Object.values(projects).forEach(project => { %>
-            <div class="project-card">
-                <h3><a href="/projects/<%= skills.skillCode %>"><%= skill.action %></a></h3>
-                <p class="project-tool"><%= project.tool %></p>
-            </div>
-        <% }); %>
-    </div>
-</main>
+        <% Object.keys(groupedProjects).forEach(category=> { %>
+
+            <section class="category-group">
+                <h2>
+                    <%= category %>
+                </h2>
+
+                <div class="project-list">
+                    <% groupedProjects[category].forEach(project=> { %>
+                        <div class="project-card">
+                            <h3>
+                                <a href="/projects/<%= project.id %>">
+                                    <%= project.name %>
+                                </a>
+                            </h3>
+                            <p>
+                                <%= project.description %>
+                            </p>
+                        </div>
+                        <% }); %>
+                </div>
+            </section>
+            <% }); %>
+    </main>
     <%- include('../partials/footer') %>

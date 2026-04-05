@@ -1,59 +1,44 @@
 <%- include('../partials/header') %>
-    <!-- <main>
-        <div class="course-header">
+    <main>
+        <div class="project-header">
             <h1>
-                <%= course.name %>
+                <%= project.name %>
             </h1>
-            <p class="course-meta">
-                <%= courseCode %> • <%= course.creditHours %> credits
+            <p class="project-meta">
+                <%= project.category %>
             </p>
-            <p class="course-description">
-                <%= course.description %>
+            <p class="project-description">
+                <%= project.description %>
             </p>
         </div>
 
-        <div class="sections">
-            <div class="sections-header">
-                <h2>Available Sections</h2>
-                <div class="sort-options">
-                    <span>Sort by: </span>
-                    <a href="/resume/<%= courseCode %>" class="<%= currentSort === 'time' ? 'active' : '' %>">Time</a>
-                    <a href="/resume/<%= courseCode %>?sort=professor"
-                        class="<%= currentSort === 'professor' ? 'active' : '' %>">Professor</a>
-                    <a href="/resume/<%= courseCode %>?sort=room"
-                        class="<%= currentSort === 'room' ? 'active' : '' %>">Room</a>
-                </div>
+        <div class="images">
+            <h2></h2>
+
+            <div class="image-list">
+                <% images.forEach(img=> { %>
+                    <img src="<%= img.path %>" alt="project image" />
+                    <% }) %>
             </div>
+        </div>
 
-            <% if (currentSort) { %>
-                <div class="sort-message">
-                    <p>Currently sorted by: <%= currentSort %>
-                    </p>
-                </div>
-                <% } else { %>
-                    <div class="sort-message">
-                        <p>No sorting applied, using default sorting by time.</p>
-                    </div>
-                    <% } %>
+        <div class="skills">
+            <h2>Skills Used</h2>
 
-            <div class="section-list">
-                <% course.sections.forEach(section=> { %>
-                    <div class="section-card">
-                        <div class="section-time">
-                            <%= section.time %>
-                        </div>
-                        <div class="section-room">Room: <%= section.room %>
-                        </div>
-                        <div class="section-professor">Instructor: <%= section.professor %>
-                        </div>
+            <div class="skill-list">
+                <% skills.forEach(s=> { %>
+                    <div class="skill-card">
+                        <p>
+                            <%= s.skill %>
+                        </p>
                     </div>
                     <% }); %>
             </div>
-
         </div>
+
 
         <div class="navigation">
-            <p><a href="/resume">&larr; Back to Course resume</a></p>
+            <p><a href="/projects">&larr; Back to Projects</a></p>
         </div>
-    </main> -->
+    </main>
     <%- include('../partials/footer') %>

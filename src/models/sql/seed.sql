@@ -1,6 +1,5 @@
 BEGIN;
 
--- 🔻 Drop tables (in correct dependency order)
 DROP TABLE IF EXISTS project_images CASCADE;
 DROP TABLE IF EXISTS project_skills CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
@@ -8,13 +7,11 @@ DROP TABLE IF EXISTS skills CASCADE;
 DROP TABLE IF EXISTS jobs CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 
--- 🔹 Categories (Work, School, Personal)
 CREATE TABLE categories (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) UNIQUE NOT NULL
 );
 
--- 🔹 Jobs (optional context)
 CREATE TABLE jobs (
   id SERIAL PRIMARY KEY,
   company VARCHAR(80) NOT NULL,
@@ -22,7 +19,6 @@ CREATE TABLE jobs (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 🔹 Projects (core table)
 CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
@@ -41,13 +37,11 @@ CREATE TABLE projects (
     ON DELETE SET NULL
 );
 
--- 🔹 Skills (reusable)
 CREATE TABLE skills (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) UNIQUE NOT NULL
 );
 
--- 🔹 Join table (many-to-many)
 CREATE TABLE project_skills (
   project_id INTEGER,
   skill_id INTEGER,
@@ -63,7 +57,6 @@ CREATE TABLE project_skills (
     ON DELETE CASCADE
 );
 
--- 🔹 Project images (stored in /public)
 CREATE TABLE project_images (
   id SERIAL PRIMARY KEY,
   project_id INTEGER NOT NULL,
@@ -74,45 +67,49 @@ CREATE TABLE project_images (
     ON DELETE CASCADE
 );
 
--- =====================================
--- 🌱 Seed Data
--- =====================================
-
--- Categories
 INSERT INTO categories (name) VALUES
 ('Work'),
 ('School'),
 ('Personal');
 
--- Jobs
 INSERT INTO jobs (company, position) VALUES
 ('BYU Pathway', 'Web and Programming Senior Lead'),
-('BYU Idaho', 'Business Analytics TA');
+('BYU Idaho', 'Business Analytics TA'),
+('', '');
 
--- Projects
 INSERT INTO projects (name, description, category_id, job_id) VALUES
-('Landing Page Lists', 'Cleaned and maintained landing page data.', 1, 1),
-('QA Tool', 'Built internal QA tool using Microsoft stack.', 1, 1),
-('Adventure Works', 'Analyzed large dataset for business insights.', 2, 2);
+('Landing Pages Lists', 'Cleaned and maintained landing page data', 1, 1),
+('QA Tool', 'Built internal QA tool using Microsoft stack', 1, 1),
+('Adventure Works', 'Analyzed large dataset for business insights to select if owner should merge or not his company', 2, 2),
+('Self Quizlet', 'Made small program to review class concepts and be quizzed in preparation for exams', 3, 3);
 
--- Skills
 INSERT INTO skills (name) VALUES
-('SQL'),
+-- ('SQL'),
 ('Power BI'),
-('Data Cleaning'),
-('PowerApps');
+('Cleaning Data'),
+('Analyzing Data'),
+('User Experience'),
+('PowerApps'),
+('Proactive'),
+('Creative');
 
--- Project ↔ Skills
 INSERT INTO project_skills (project_id, skill_id) VALUES
-(1, 3), -- Landing Page Lists → Data Cleaning
-(2, 4), -- QA Tool → PowerApps
-(3, 1), -- Adventure Works → SQL
-(3, 2); -- Adventure Works → Power BI
+-- Landing Page Lists
+(1, 2),
+-- QA Tool
+(2, 3),
+(2, 5),
+(2, 4), 
+-- Adventure Works
+(3, 1),
+(3, 3),
+-- Self Quizlet
+(4, 7);
 
--- Images (stored in /public/images/)
 INSERT INTO project_images (project_id, image_path) VALUES
-(1, '/images/landing-page.png'),
-(2, '/images/qa-tool.png'),
-(3, '/images/adventure-works.png');
+(2, '/images/qa_form.png'),
+(2, '/images/qa_record.png'),
+(4, '/images/selfquiz_cards.png'),
+(4, '/images/selfquiz_quiz.png');
 
 COMMIT;

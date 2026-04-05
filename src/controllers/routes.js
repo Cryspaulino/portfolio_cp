@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import { homePage, testErrorPage } from './index.js';
-import { projectPage, skillDetailPage } from './projects/projects.js';
-// import registrationRoutes from './forms/registration.js';
-// import contactRoutes from './forms/contact.js';
+import { projectsPage, projectDetailPage } from './projects/projects.js';
 
 const router = Router();
 
@@ -10,22 +8,10 @@ const router = Router();
 router.get('/', homePage);
 
 // Projects
-router.get('/projects', projectPage);
-router.get('/projects/:slugId', skillDetailPage);
+router.get('/projects', projectsPage);
+router.get('/projects/:id', projectDetailPage);
 
+// Test
 router.get('/test-error', testErrorPage);
 
 export default router;
-
-
-// Add contact-specific styles to all contact routes
-// router.use('/contact', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
-//     next();
-// });
-
-// // Contact form routes
-// router.use('/contact', contactRoutes);
-
-// Registration routes
-// router.use('/register', registrationRoutes);

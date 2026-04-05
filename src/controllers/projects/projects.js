@@ -1,42 +1,56 @@
-import { getAllSkills, getSkillBySlug } from '../../models/projects/skills.js';
-// import { getSectionsByCourseSlug } from '../../models/catalog/catalog.js';
+import { getAllProjects, getProjectById } from '../../models/projects/projects.js';
+import { getSkillsByProjectId } from '../../models/projects/skills.js';
+import { getImagesByProjectId } from '../../models/projects/images.js';
 
-// -- MOST RECENT GUIDE:
-// -- DEPARTMENTS = JOBS
-// -- COURSES = SKILLS
-// -- CATALOG = PROJECTS
+// List page
+export const projectsPage = async (req, res) => {
+    const projects = await getAllProjects();
+    const selectedCategory = req.query.category;
 
-// Route handler for the resume skills page
-const projectPage = async (req, res) => {
-    const projects = await getAllSkills();
+    // get ALL categories (before filtering)
+    const allCategories = [...new Set(projects.map(p => p.category))];
+
+    // filter AFTER
+    let filtered = projects;
+    if (selectedCategory) {
+        filtered = projects.filter(p => p.category === selectedCategory);
+    }
+
+    // group filtered
+    const grouped = {};
+    filtered.forEach(p => {
+        const category = p.category || 'Other';
+        if (!grouped[category]) grouped[category] = [];
+        grouped[category].push(p);
+    });
 
     res.render('projects/projects', {
         title: 'Projects',
-        projects: projects
+        groupedProjects: grouped,
+        categories: allCategories,
+        selectedCategory
     });
 };
 
-// Route handler for individual course detail pages
-const skillDetailPage = async (req, res, next) => {
-    const skillSlug = req.params.slugId;
-    const skill = await getSkillBySlug(skillSlug);
+// Detail page
+export const projectDetailPage = async (req, res, next) => {
+    const projectId = req.params.id;
+    const project = await getProjectById(projectId);
 
-    if (Object.keys(skill).length === 0) {
-        const err = new Error(`Skill ${skillSlug} not found`);
+    if (Object.keys(project).length === 0) {
+        const err = new Error(`Project ${projectId} not found`);
         err.status = 404;
         return next(err);
     }
 
-    // Get sections (course offerings) separately from the resume
-    // Pass the sortBy parameter directly to the model - PostgreSQL handles the sorting
-    // const sortBy = req.query.sort || 'time';
+    const skills = await getSkillsByProjectId(projectId);
+    const images = await getImagesByProjectId(projectId);
 
     res.render('projects/projectdetails', {
-        title: `${skill.skillCode} - ${skill.action}`,
-        skill: skill,
-        // sections: sections,
-        // currentSort: sortBy
+        title: project.name,
+        project,
+        skills,
+        images
     });
-};
 
-export { projectPage, skillDetailPage };
+};
