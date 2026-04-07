@@ -17,8 +17,7 @@ const caCert = fs.readFileSync(path.join(__dirname, '../../bin', 'byuicse-psql-c
  * This improves performance and reduces load on the database server.
  *
  * Uses a connection string from environment variables for simplified setup.
- * The connection string format is:
- * postgresql://username:password@host:port/database
+ * The connection string format is: postgresql://username:password@host:port/database
  */
 const pool = new Pool({
     connectionString: process.env.DB_URL,

@@ -7,18 +7,21 @@ import db from '../db.js';
  * @param {string} email - Email address to search for
  * @returns {Promise<Object|null>} User object with password hash or null if not found
  */
-export const findUserByEmail = async (email) => {
+const findUserByEmail = async (email) => {
     const query = `
-        SELECT 
-            users.id, 
-            users.name, 
-            users.email, 
-            users.password, 
-            users.created_at,
+        SELECT id, name, email, password, created_at
+        FROM users
+        WHERE LOWER(email) = LOWER($1)
         LIMIT 1
     `;
-    const result = await db.query(query, [email]);
-    return result.rows[0] || null;
+
+    try {
+        const result = await db.query(query, [email]);
+        return result.rows[0] || null;
+    } catch (error) {
+        console.error('Error finding user by email:', error);
+        throw error;
+    }
 };
 
 /**
@@ -28,8 +31,13 @@ export const findUserByEmail = async (email) => {
  * @param {string} hashedPassword - The stored password hash
  * @returns {Promise<boolean>} True if password matches, false otherwise
  */
-export const verifyPassword = async (plainPassword, hashedPassword) => {
-    const result = await bcrypt.compare(plainPassword, hashedPassword);
-
-    return result;
+const verifyPassword = async (plainPassword, hashedPassword) => {
+    try {
+        return await bcrypt.compare(plainPassword, hashedPassword);
+    } catch (error) {
+        console.error('Error verifying password:', error);
+        return false;
+    }
 };
+
+export { findUserByEmail, verifyPassword };

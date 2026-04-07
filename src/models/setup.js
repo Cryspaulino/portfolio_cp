@@ -48,4 +48,11 @@ const testConnection = async () => {
     return true;
 };
 
+const practicePath = join(__dirname, 'sql', 'role_seed.sql');
+if (fs.existsSync(practicePath)) {
+    const practiceSQL = fs.readFileSync(practicePath, 'utf8');
+    await db.query(practiceSQL);
+    console.log('Practice database tables initialized');
+}
+
 export { setupDatabase, testConnection };

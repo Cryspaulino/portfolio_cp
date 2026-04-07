@@ -42,7 +42,7 @@ const setHeadAssetsFunctionality = (res) => {
 
     // These functions will be available in EJS templates
     res.locals.renderStyles = () => {
-        return res.locals.styles
+        return (res.locals.styles || [])
             // Sort by priority: higher numbers load first
             .sort((a, b) => b.priority - a.priority)
             .map(item => item.content)
@@ -50,7 +50,7 @@ const setHeadAssetsFunctionality = (res) => {
     };
 
     res.locals.renderScripts = () => {
-        return res.locals.scripts
+        return (res.locals.scripts || [])
             // Sort by priority: higher numbers load first
             .sort((a, b) => b.priority - a.priority)
             .map(item => item.content)
@@ -75,12 +75,13 @@ const addLocalVariables = (req, res, next) => {
 
     res.locals.greeting = `<p class="greeting">${getCurrentGreeting()}</p>`;
 
-    const themes = ['blue-theme', 'green-theme', 'red-theme', 'grey-theme'];
-    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-    res.locals.bodyClass = randomTheme;
+    // Convenience variable for UI state based on session state
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
 
     setHeadAssetsFunctionality(res);
-
     next();
 };
 

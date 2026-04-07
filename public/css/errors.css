@@ -1,6 +1,11 @@
 .fourhundred, .fivehundred {
     padding: 15px;
     text-align: center;
+    justify-items: center;
+
+    img{
+        width: 800px;
+    }
 
     .break500, .break404{
         width: 80%;

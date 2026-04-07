@@ -4,6 +4,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import flash from './src/middleware/flash.js';
 
+import session from 'express-session';
+import connectPgSimple from 'connect-pg-simple';
+import { caCert } from './src/models/db.js';
+import { startSessionCleanup } from './src/utils/session-cleanup.js';
+
 // Import MVC components
 import routes from './src/controllers/routes.js';
 import { addLocalVariables } from './src/middleware/global.js';
@@ -15,19 +20,45 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+const pgSession = connectPgSimple(session);
+
+app.use(session({
+    store: new pgSession({
+        conObject: {
+            connectionString: process.env.DB_URL,
+            // Configure SSL for session store connection (required by BYU-I databases)
+            ssl: {
+                ca: caCert,
+                rejectUnauthorized: true,
+                checkServerIdentity: () => { return undefined; }
+            }
+        },
+        tableName: 'session',
+        createTableIfMissing: true
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: NODE_ENV.includes('dev') !== true,
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
+
+startSessionCleanup();
+
+app.use(addLocalVariables);
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
-// Allow Express to receive and process POST data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(addLocalVariables);
 app.use(flash);
 
 app.use('/', routes);
 
-/* Error Handling */
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
     err.status = 404;

@@ -9,36 +9,33 @@
     </title>
     <link rel="shortcut icon" href="/public/images/naptime.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/main.css">
-    <!-- <%- renderStyles() %>
-        <%- renderScripts() %> -->
+    <%- renderStyles() %>
+    <%- renderScripts() %>
 
-    <% if (NODE_ENV.includes('dev')) { %>
-        <script>
-            const host = window.location.hostname;
-            const currentPort = window.location.port;
-
-            const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3002;
-
-            const ws = new WebSocket(`ws://${host}:${wsPort}`);
-            ws.onclose = () => {
-                setTimeout(() => location.reload(), 2000);
-            };
-        </script>
-        <% } %>
 </head>
 
-<body class="<%= bodyClass %>">
+<body>
     <header>
         <nav>
-                <a href="/projects">Projects</a>
+            <a href="/projects">Projects</a>
+            <% if (!isLoggedIn) { %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <% } %>
+            
+            <% if (isLoggedIn) { %>
+                <a href="/dashboard">Dashboard</a>
                 <a href="/projects/add">Add Project</a>
                 <a href="/feedback">Feedback</a>
                 <a href="/feedback/responses">Feedback Responses</a>
-                <a href="/register">Register</a>
+                <!-- <a href="/logout">Logout</a> -->
+            <% } %>
+
+            <p><%- greeting %></p>
         </nav>
     </header>
 
-    <!-- <% const messages=flash(); 
+    <% const messages=flash(); 
             const hasMessages=Object.values(messages).some(arr=> arr.length > 0); %>
 
         <% if (hasMessages) { %>
@@ -51,4 +48,4 @@
                         <% }); %>
                             <% }); %>
             </div>
-            <% } %> -->
+            <% } %>

@@ -113,4 +113,12 @@ INSERT INTO project_images (project_id, image_path) VALUES
 (4, '/images/selfquiz_cards.png'),
 (4, '/images/selfquiz_quiz.png');
 
+-- Roles table for role-based access control
+CREATE TABLE IF NOT EXISTS roles (
+    id SERIAL PRIMARY KEY,
+    role_name VARCHAR(50) UNIQUE NOT NULL,
+    role_description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 COMMIT;
