@@ -1,7 +1,7 @@
     form {
         background: #ffffff;
         padding: 2rem;
-        border-radius: 12px;
+        border-radius: 20px;
         border: 1px solid #e5e7eb;
         display: flex;
         flex-direction: column;
@@ -18,7 +18,7 @@
             textarea,
             select {
                 margin-top: 0.3rem;
-                padding: 0.5rem;
+                padding: 1rem;
                 border-radius: 6px;
                 border: 1px solid #d1d5db;
                 font-size: 0.9rem;

@@ -61,6 +61,13 @@ const addProjectToDb = async ({ name, description, stage, category_id }) => {
         RETURNING id, name, description, stage, category_id
     `;
     const result = await db.query(query, [name, description, stage, category_id]);
+
+    console.log('INSERTED PROJECT:', result.rows[0]);
+
+    // 🔥 immediately check DB again
+    const check = await db.query('SELECT * FROM projects ORDER BY id DESC LIMIT 1');
+    console.log('LATEST IN DB:', check.rows[0]);
+
     return result.rows[0];
 };
 /**

@@ -98,7 +98,10 @@
 
     .project-description {
       font-size: 0.95rem;
-      color: #4b5563;
+    }
+
+    p{
+      color: #465264;
     }
   }
 }
@@ -121,6 +124,6 @@
   }
 
   .project-description {
-    color: #4b5563;
+    color: #2b333e;
   }
 }

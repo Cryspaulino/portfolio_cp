@@ -27,7 +27,7 @@ const processLogin = async (req, res) => {
 
     if (!errors.isEmpty()) {
         console.error('There was an error during the validation process.')
-        return res.redirect('/login');
+        res.redirect('/login');
     }
 
     const { email, password } = req.body;
@@ -73,7 +73,7 @@ const processLogout = (req, res) => {
     if (!req.session) {
         // If no session exists, there's nothing to destroy,
         // so we just redirect the user back to the home page
-        return res.redirect('/');
+        res.redirect('/');
     }
 
     // Call destroy() to remove this session from the store (PostgreSQL in our case)
@@ -94,7 +94,7 @@ const processLogout = (req, res) => {
              * 
              * Since this is a practice site, we will redirect to the home page anyway.
              */
-            return res.redirect('/');
+            res.redirect('/');
         }
 
         // If session destruction succeeded, clear the session cookie from the browser

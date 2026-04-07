@@ -58,6 +58,7 @@ body {
     flex: 1 0 auto;
     max-width: 900px;
     margin: 2-3rem auto;
+    margin-top: 20px;
     padding: 0 1rem;
 
     h1 {
@@ -67,7 +68,7 @@ body {
     }
 
     p {
-      color: #6b7280;
+      color: #444b59;
     }
 
     .navigation {

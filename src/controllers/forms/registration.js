@@ -43,7 +43,7 @@ const processRegistration = async (req, res) => {
         errors.array().forEach(error => {
             req.flash('error', error.msg);
         });
-        return res.redirect('/register');
+        res.redirect('/register');
     }
 
     const { name, email, password } = req.body;
@@ -53,7 +53,7 @@ const processRegistration = async (req, res) => {
 
         if (emailCall) {
             req.flash('warning', 'An account already exists')
-            return res.redirect('/register');
+            res.redirect('/register');
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);

@@ -1,11 +1,11 @@
 <%- include('../partials/header') %>
     <main>
-        <form method="POST" action="/projects/add" enctype="multipart/form-data">
+        <form method="POST" action="/projects/add">
             <label>Project Name:
                 <input type="text" name="name" required>
             </label>
             <label>Description:
-                <textarea name="description" required></textarea>
+                <input name="description" required></input>
             </label>
             <label>Category:
                 <select name="category_id" required>

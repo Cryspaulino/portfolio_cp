@@ -19,9 +19,6 @@ const projectValidation = [
     body('category_id')
         .notEmpty()
         .withMessage('Category is required'),
-    body('job_id')
-        .notEmpty()
-        .withMessage('Job association is required')
 ];
 
 const projectsPage = async (req, res) => {
