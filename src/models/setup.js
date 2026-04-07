@@ -26,19 +26,16 @@ const setupDatabase = async () => {
          */
         hasData = false;
     }
-    
-    if (hasData) {
-        console.log('Database already seeded');
-        return true;
-    }
-    
+
+    console.log('Resetting Database...');
+
     // No skills found - run full seed
     console.log('Seeding database...');
     const seedPath = join(__dirname, 'sql', 'seed.sql');
     const seedSQL = fs.readFileSync(seedPath, 'utf8');
     await db.query(seedSQL);
     console.log('Database seeded successfully');
-    
+
     return true;
 };
 

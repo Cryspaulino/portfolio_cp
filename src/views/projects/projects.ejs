@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
     <main>
         <h1>Projects</h1>
-        
+
         <div class="filters">
             <a href="/projects" class="<%= !selectedCategory ? 'active' : '' %>">All</a>
 
@@ -20,7 +20,7 @@
                 </h2>
 
                 <div class="project-list">
-                    <% groupedProjects[category].forEach(project=> { %>
+                    <% groupedProjects.forEach(project=> { %>
                         <div class="project-card">
                             <h3>
                                 <a href="/projects/<%= project.id %>">
@@ -35,5 +35,46 @@
                 </div>
             </section>
             <% }); %>
+
+                <div class="add-project-container">
+                    <button id="addProjectBtn">+ Add Project</button>
+                </div>
+
+                <form method="POST" action="/projects/projects" enctype="multipart/form-data">
+                    <label>Project Name:
+                        <input type="text" name="name" required>
+                    </label>
+                    <label>Description:
+                        <textarea name="description" required></textarea>
+                    </label>
+                    <label>Category:
+                        <select name="category_id" required>
+                            <% categories.forEach(cat=> { %>
+                                <option value="<%= cat %>">
+                                    <%= cat %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </label>
+                    <label>Job:
+                        <select name="job_id" required>
+                            <% jobs.forEach(job=> { %>
+                                <option value="<%= job.id %>">
+                                    <%= job.company %> - <%= job.position %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </label>
+                    <label>Skills (comma-separated):
+                        <input type="text" name="skills" placeholder="JavaScript, Node.js">
+                    </label>
+                    <label>Images:
+                        <input type="text" name="images" placeholder="/images/imgname">
+                    </label>
+
+                    <button type="submit">Add Project</button>
+                </form>
+
+                <script src="/js/form.js"></script>
     </main>
     <%- include('../partials/footer') %>

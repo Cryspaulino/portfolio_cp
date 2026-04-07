@@ -1,8 +1,4 @@
 // Route handlers for static pages
-const homePage = (req, res) => {
-    res.render('home', { title: 'Home' });
-};
-
 const testErrorPage = (req, res, next) => {
     const err = new Error('This is a test error');
     err.status = 500;
@@ -14,4 +10,4 @@ const testErrorPage = (req, res, next) => {
 // };
 
 
-export { homePage, testErrorPage };
+export { testErrorPage };

@@ -22,6 +22,11 @@
             </div>
         </div>
 
+        <div id="imageModal" class="modal" onclick="closeModal(event)">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" class="modal-content" />
+        </div>
+
         <div class="skills">
             <h2>Skills Used</h2>
 
@@ -40,5 +45,7 @@
         <div class="navigation">
             <p><a href="/projects">&larr; Back to Projects</a></p>
         </div>
+
+    <script src="/js/modals.js"></script>
     </main>
     <%- include('../partials/footer') %>

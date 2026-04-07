@@ -1,17 +1,30 @@
 import { Router } from 'express';
-import { homePage, testErrorPage } from './index.js';
-import { projectsPage, projectDetailPage } from './projects/projects.js';
+import projectsRoutes from './projects/projects.js';
+import registrationRoutes from './forms/registration.js';
+import { testErrorPage } from './index.js';
 
 const router = Router();
 
-// Home
-router.get('/', homePage);
+/**
+ * Add project-specific styles to all project routes
+ */
+// router.use('/projects', (req, res, next) => {
+//     res.addStyle('<link rel="stylesheet" href="/css/projects.css">');
+//     next();
+// });
 
-// Projects
-router.get('/projects', projectsPage);
-router.get('/projects/:id', projectDetailPage);
+// Projects listing and details
 
-// Test
+router.use('/projects', projectsRoutes);
+
+router.get('/projects', projectsRoutes);
+router.get('/projects/:id', projectsRoutes);
+
+router.get('/projects/projects', projectsRoutes);
+router.post('/projects/projects', projectsRoutes);
+
+router.use('/register', registrationRoutes);
+
 router.get('/test-error', testErrorPage);
 
 export default router;

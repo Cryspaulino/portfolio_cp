@@ -8,22 +8,13 @@ import flash from './src/middleware/flash.js';
 import routes from './src/controllers/routes.js';
 import { addLocalVariables } from './src/middleware/global.js';
 
-/**
- * Server configuration
- */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 const PORT = process.env.PORT || 3001;
 
-/**
- * Setup Express Server
- */
 const app = express();
 
-/**
- * Configure Express
- */
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
@@ -34,46 +25,7 @@ app.use(express.json());
 app.use(addLocalVariables);
 app.use(flash);
 
-app.use('/', routes);
-
-// -- GUIDE: 
-// departments = jobs
-// courses = projects
-// faculty = skills
-// catalog = resume
-
-// Projects resume list page
-app.get('/resume', (req, res) => {
-    res.render('resume', {
-        title: 'Resume',
-        projects: projects
-    });
-});
-
-// Course detail page with route parameter
-// app.get('/catalog/:courseId', (req, res) => {
-//     // Extract the course ID from the URL
-//     const courseId = req.params.courseId;
-
-//     // Look up the course in our data
-//     const course = courses[courseId];
-
-//     // Handle course not found
-//     if (!course) {
-//         const err = new Error(`Course ${courseId} not found`);
-//         err.status = 404;
-//         return next(err);
-//     }
-
-//     // Log the parameter for debugging
-//     console.log('Viewing course:', courseId);
-
-//     // Render the course detail template
-//     res.render('course-detail', {
-//         title: `${course.id} - ${course.title}`,
-//         course: course
-//     });
-// });
+app.use('/projects', routes);
 
 /* Error Handling */
 app.use((req, res, next) => {
@@ -108,9 +60,7 @@ app.use((err, req, res, next) => {
     }
 });
 
-/**
- * Start WebSocket Server in Development Mode; used for live reloading
- */
+//  Live reloading
 if (NODE_ENV.includes('dev')) {
     const ws = await import('ws');
 
@@ -130,9 +80,8 @@ if (NODE_ENV.includes('dev')) {
     }
 }
 
-
 app.listen(PORT, async () => {
     await setupDatabase();
     await testConnection();
-    console.log(`Server is running on http://127.0.0.1:${PORT}`);
+    console.log(`Server is running on http://127.0.0.1:${PORT}/projects`);
 });
