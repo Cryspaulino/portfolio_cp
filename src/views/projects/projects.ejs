@@ -20,7 +20,7 @@
                 </h2>
 
                 <div class="project-list">
-                    <% groupedProjects.forEach(project=> { %>
+                    <% groupedProjects[category].forEach(project=> { %>
                         <div class="project-card">
                             <h3>
                                 <a href="/projects/<%= project.id %>">
@@ -52,15 +52,6 @@
                             <% categories.forEach(cat=> { %>
                                 <option value="<%= cat %>">
                                     <%= cat %>
-                                </option>
-                                <% }) %>
-                        </select>
-                    </label>
-                    <label>Job:
-                        <select name="job_id" required>
-                            <% jobs.forEach(job=> { %>
-                                <option value="<%= job.id %>">
-                                    <%= job.company %> - <%= job.position %>
                                 </option>
                                 <% }) %>
                         </select>

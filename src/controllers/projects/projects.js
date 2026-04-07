@@ -76,14 +76,13 @@ const addProject = async (req, res) => {
         return res.redirect('/projects/projects');
     }
 
-    const { name, description, category_id, job_id } = req.body;
+    const { name, description, category_id } = req.body;
 
     try {
         await addProjectToDb({
             name,
             description,
             category_id: parseInt(category_id),
-            job_id: parseInt(job_id)
         });
         req.flash('success', 'Project added successfully!');
         res.redirect('/projects');

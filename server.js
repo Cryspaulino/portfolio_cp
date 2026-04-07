@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(addLocalVariables);
 app.use(flash);
 
-app.use('/projects', routes);
+app.use('/', routes);
 
 /* Error Handling */
 app.use((req, res, next) => {
