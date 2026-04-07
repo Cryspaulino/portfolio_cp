@@ -23,6 +23,7 @@ CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   description TEXT,
+  stage VARCHAR(20) DEFAULT 'idea',
   category_id INTEGER,
   job_id INTEGER,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -77,11 +78,11 @@ INSERT INTO jobs (company, position) VALUES
 ('BYU Idaho', 'Business Analytics TA'),
 ('', '');
 
-INSERT INTO projects (name, description, category_id, job_id) VALUES
-('Landing Pages Lists', 'Cleaned and maintained landing page data', 1, 1),
-('QA Tool', 'Built internal QA tool using Microsoft stack', 1, 1),
-('Adventure Works', 'Analyzed large dataset for business insights to select if owner should merge or not his company', 2, 2),
-('Self Quizlet', 'Made small program to review class concepts and be quizzed in preparation for exams', 3, 3);
+INSERT INTO projects (name, description, stage, category_id, job_id) VALUES
+('Landing Pages Lists', 'Cleaned and maintained landing page data', 'Completed', 1, 1),
+('QA Tool', 'Built internal QA tool using Microsoft stack', 'Completed', 1, 1),
+('Adventure Works', 'Analyzed large dataset for business insights to select if owner should merge or not his company', 'Completed', 2, 2),
+('Self Quizlet', 'Made small program to review class concepts and be quizzed in preparation for exams', 'Completed', 3, 3);
 
 INSERT INTO skills (name) VALUES
 -- ('SQL'),

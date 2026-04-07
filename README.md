@@ -10,14 +10,3 @@ pgAdmin showing your tables and relationships
 4. Test Account Credentials: Username or email for one account of each role type, do
 not include the password in the README, but use P@$$w0rd! for all users
 5. Known Limitations: Any features you did not complete or bugs you are aware of
-
-
-
-~~~~~~~~~~~~~~~~~~
-Others:
-
-PERSONAL INITIAL GUIDE: 
--- departments = jobs
--- courses = projects
--- faculty = skills
--- catalog = resume

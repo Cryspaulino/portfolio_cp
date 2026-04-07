@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+    <main>
+        <form method="POST" action="/projects/add" enctype="multipart/form-data">
+            <label>Project Name:
+                <input type="text" name="name" required>
+            </label>
+            <label>Description:
+                <textarea name="description" required></textarea>
+            </label>
+            <label>Category:
+                <select name="category_id" required>
+                    <% categories.forEach(cat=> { %>
+                        <option value="<%= cat.id %>">
+                            <%= cat.name %>
+                        </option>
+                        <% }) %>
+                </select>
+                <label>Stage:
+                    <select name="stage">
+                        <option value="idea">Idea</option>
+                        <option value="started">Started</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </label>
+            </label>
+            <label>Skills (comma-separated):
+                <input type="text" name="skills" placeholder="JavaScript, Node.js">
+            </label>
+            <label>Images:
+                <input type="text" name="images" placeholder="/images/imgname">
+            </label>
+
+            <button type="submit">Add Project</button>
+        </form>
+
+        <script src="/js/form.js"></script>
+    </main>
+    <%- include('../partials/footer') %>

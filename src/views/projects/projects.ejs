@@ -30,42 +30,14 @@
                             <p>
                                 <%= project.description %>
                             </p>
+                            <p class="stage">
+                                <%= project.stage %>
+                            </p>
                         </div>
                         <% }); %>
                 </div>
             </section>
             <% }); %>
 
-                <div class="add-project-container">
-                    <button id="addProjectBtn">+ Add Project</button>
-                </div>
-
-                <form method="POST" action="/projects/projects" enctype="multipart/form-data">
-                    <label>Project Name:
-                        <input type="text" name="name" required>
-                    </label>
-                    <label>Description:
-                        <textarea name="description" required></textarea>
-                    </label>
-                    <label>Category:
-                        <select name="category_id" required>
-                            <% categories.forEach(cat=> { %>
-                                <option value="<%= cat %>">
-                                    <%= cat %>
-                                </option>
-                                <% }) %>
-                        </select>
-                    </label>
-                    <label>Skills (comma-separated):
-                        <input type="text" name="skills" placeholder="JavaScript, Node.js">
-                    </label>
-                    <label>Images:
-                        <input type="text" name="images" placeholder="/images/imgname">
-                    </label>
-
-                    <button type="submit">Add Project</button>
-                </form>
-
-                <script src="/js/form.js"></script>
     </main>
     <%- include('../partials/footer') %>

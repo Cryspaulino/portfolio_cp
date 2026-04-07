@@ -61,7 +61,8 @@ const showAddForm = async (req, res) => {
     try {
         const jobs = await getAllJobs();
         const categories = await getAllCategories();
-        res.render('projects/projects', { categories, jobs, title: 'Projects List' });
+
+        res.render('projects/add', { categories, jobs, title: 'Add Project' });
     } catch (error) {
         console.error('Error displaying add project form:', error);
         req.flash('error', 'Unable to load form');
@@ -73,15 +74,16 @@ const addProject = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         errors.array().forEach(error => req.flash('error', error.msg));
-        return res.redirect('/projects/projects');
+        return res.redirect('/projects');
     }
 
-    const { name, description, category_id } = req.body;
+    const { name, description, stage, category_id } = req.body;
 
     try {
         await addProjectToDb({
             name,
             description,
+            stage,
             category_id: parseInt(category_id),
         });
         req.flash('success', 'Project added successfully!');
@@ -89,7 +91,7 @@ const addProject = async (req, res) => {
     } catch (error) {
         console.error('Error adding project:', error);
         req.flash('error', 'Unable to save project');
-        res.redirect('/projects/projects');
+        res.redirect('/projects/add');
     }
 };
 
@@ -121,11 +123,11 @@ const projectDetailPage = async (req, res, next) => {
     }
 };
 
+// Get form and submission
+router.get('/projects/add', showAddForm);
+router.post('/projects/add', projectValidation, addProject);
+// Show all projects
 router.get('/projects', projectsPage);
-
-router.get('/projects', showAddForm);
-router.post('/projects', projectValidation, addProject);
-
-router.get('/:id', projectDetailPage);
+router.get('/projects/:id', projectDetailPage);
 
 export default router;

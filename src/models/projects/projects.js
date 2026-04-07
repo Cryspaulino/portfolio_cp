@@ -54,13 +54,13 @@ const getProject = async (identifier, identifierType = 'id') => {
  * @param {string} project.category - Category name
  * @returns {Promise<Object>} The newly created project record
  */
-const addProjectToDb = async ({ name, description, category_id }) => {
+const addProjectToDb = async ({ name, description, stage, category_id }) => {
     const query = `
-        INSERT INTO projects (name, description, category_id)
-        VALUES ($1, $2, $3)
-        RETURNING id, name, description, category_id
+        INSERT INTO projects (name, description, stage, category_id)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, name, description, stage, category_id
     `;
-    const result = await db.query(query, [name, description, category_id]);
+    const result = await db.query(query, [name, description, stage, category_id]);
     return result.rows[0];
 };
 /**

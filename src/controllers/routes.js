@@ -20,8 +20,8 @@ router.use('/projects', projectsRoutes);
 router.get('/projects', projectsRoutes);
 router.get('/projects/:id', projectsRoutes);
 
-router.get('/projects/projects', projectsRoutes);
-router.post('/projects/projects', projectsRoutes);
+router.get('/projects/add', projectsRoutes);
+router.post('/projects/add', projectsRoutes);
 
 router.use('/register', registrationRoutes);
 
